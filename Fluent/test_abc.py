@@ -37,18 +37,18 @@ class Order(object):
         return fmt.format(self.customer, self.total(), self.due())
 
 
-class Promition(ABC):
+class Promotion(ABC):
     @abstractmethod
     def discount(self, order):
         """Return discount as a postive dollar amount"""
 
 
-class FidelityPromo(Promition):
+class FidelityPromo(Promotion):
     def discount(self, order):
         return order.total() * 0.05 if order.customer.fidelity >= 1000 else 0
 
 
-class BulkItemPromo(Promition):
+class BulkItemPromo(Promotion):
     def discount(self, order):
         discount = 0
         for item in order.cart:
@@ -57,10 +57,10 @@ class BulkItemPromo(Promition):
         return discount
 
 
-class LargeOrderPromo(Promition):
+class LargeOrderPromo(Promotion):
     def discount(self, order):
-        distint_items = {item.product for item in order.cart}
-        return order.total() * 0.07 if len(distint_items) >= 10 else 0
+        distinct_items = {item.product for item in order.cart}
+        return order.total() * 0.07 if len(distinct_items) >= 10 else 0
 
 
 if __name__ == '__main__':
