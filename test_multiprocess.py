@@ -28,10 +28,11 @@ def counter(start):
 def main():
     pool = []
     start_time = time.time()
-    for i in range(2):
+    for i in range(3):
         t = Process(target=counter, args=(i,))
         t.start()
         pool.append(t)
+    for t in pool:
         t.join()
     end_time = time.time()
     print("{} Total time: {}".format(platform.python_version(), end_time - start_time))
